@@ -25,4 +25,16 @@ class CategoryController extends Controller
             'data' => $category
         ]);
     }
+
+    public function updateCategory(Request $request, $id){
+        $category=Category::find($id);
+
+        // validotor 
+
+        // update 
+
+        // response 
+    }
+
+    
 }
