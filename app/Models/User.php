@@ -69,4 +69,10 @@ class User extends Authenticatable implements HasMedia
     public function getAvatarUrl($conversionName=""){
         return $this->getMedia('avatar')->first()?->getUrl($conversionName);
     }
+
+    public function categories(){
+
+        return $this->hasMany(Category::class);
+        
+    }
 }

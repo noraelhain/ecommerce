@@ -23,3 +23,14 @@ Route::middleware('auth:sanctum')->post('logout-all',[AuthController::class,'log
 Route::middleware('auth:sanctum')->delete('delete-account',[AuthController::class,'deleteAccount']);
 
 Route::middleware('auth:sanctum')->post('update-account',[AuthController::class,'update']);
+
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::post('/categories/create',[CategoryController::class,'store']);
+    Route::post('categories/update/{id}',[CategoryController::class,'updateCategory']);
+    Route::delete('categories/delete/{id}',[CategoryController::class,'destroy']);
+    Route::post('categories/{category}/toggle-active',[CategoryController::class,'toggleActive']);
+});
+
+Route::get('/categories/search/{keyword}',[CategoryController::class,'search']);
+Route::get('/categories/{userId}',[CategoryController::class,'userCategories']);

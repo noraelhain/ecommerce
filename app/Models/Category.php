@@ -15,6 +15,7 @@ class Category extends Model
     'description',
     'is_active',
     'type',
+    'user_id'
    ];
 
    public function casts(){
@@ -48,5 +49,9 @@ class Category extends Model
    // public function products(){
    //  return $this->hasMany(Product::class);
    // }
+
+   public function user(){
+      return $this->belongsTo(User::class);
+   }
 
 }

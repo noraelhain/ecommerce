@@ -7,9 +7,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Traits\ApiResponse;
 
 class AuthController extends Controller
 {
+    use ApiResponse;
     public function login(Request $request){
 
         $request->validate([
@@ -37,7 +39,6 @@ class AuthController extends Controller
     }
 
     public function register(Request $request){
-
         //1 validtion 
         $request->validate([
             'name' => ['required','string','max:255'],
@@ -45,7 +46,6 @@ class AuthController extends Controller
             'password' => ['required','string','min:8','confirmed'],
             'avatar' =>['nullable','image','mimes:png,jpg,jpeg,webp,gif','max:2024']
         ]);
-
         //2 create data --> model ->create()
         $user= User::create([
             'name' => $request->name,
@@ -60,14 +60,21 @@ class AuthController extends Controller
         //3 token 
         $token=$user->createToken('auth_token')->plainTextToken;
 
-        //4 response
-        return response()->json([
-            'status'=> true,
-            'message' => 'create Account Done',
+        $data=[
             'user'=>$user,
             'avatar_url' => $user->getAvatarUrl('avatar'),
-            'token' =>$token,
-        ]);
+            'token'=>$token
+        ];
+          
+        //4 response
+        return $this->successResponse(
+           $data,
+           'success',
+           200
+
+        );
+
+
 
 
     }
