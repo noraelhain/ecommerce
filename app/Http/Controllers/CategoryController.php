@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -26,13 +27,8 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'name' => ['required','string','max:255'],
-            'description' => ['required','string'],
-            'is_active' => ['required','boolean'],
-            'type'=>['nullable'],
-        ]);
+    public function store(CategoryRequest $request){
+;
 
         $category=Category::create([
             'name'=>$request->name,
@@ -56,16 +52,8 @@ class CategoryController extends Controller
 
     }
 
-    public function updateCategory(Request $request, $id){
-        
-
-        // validotor 
-            $request->validate([
-            'name' => ['required','string','max:255'],
-            'description' => ['required','string'],
-            'is_active' => ['required','boolean'],
-            'type'=>['nullable'],
-        ]);
+    public function updateCategory(CategoryRequest $request, $id){
+    
 
         //check user id 
         $category=Category::where('id',$id)

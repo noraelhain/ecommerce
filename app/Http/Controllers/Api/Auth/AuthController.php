@@ -38,14 +38,8 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(Request $request){
-        //1 validtion 
-        $request->validate([
-            'name' => ['required','string','max:255'],
-            'email' => ['required','email','unique:users,email'],
-            'password' => ['required','string','min:8','confirmed'],
-            'avatar' =>['nullable','image','mimes:png,jpg,jpeg,webp,gif','max:2024']
-        ]);
+    public function register(UserRequest $request){
+
         //2 create data --> model ->create()
         $user= User::create([
             'name' => $request->name,
@@ -67,15 +61,11 @@ class AuthController extends Controller
         ];
           
         //4 response
-        return $this->successResponse(
-           $data,
-           'success',
-           200
-
-        );
-
-
-
+        return $this->successResponse([
+            'user' =>new UserResource($user),
+            //'user'=>$user->toResource()
+            'token'=>$token,
+        ],200);
 
     }
 

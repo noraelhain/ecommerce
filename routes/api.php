@@ -13,7 +13,7 @@ Route::post('/login',[AuthController::class,'login']);
 
 Route::post('/register',[AuthController::class,'register']);
 
-Route::get('/categories',[CategoryController::class,'index']);
+Route::get('/categories',[CategoryController::class,'index'])->middleware('role:user');
 Route::get('/categories/{id}',[CategoryController::class,'show']);
 
 Route::middleware('auth:sanctum')->post('logout',[AuthController::class,'logOut']);
@@ -34,3 +34,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
 Route::get('/categories/search/{keyword}',[CategoryController::class,'search']);
 Route::get('/categories/{userId}',[CategoryController::class,'userCategories']);
+
+
+ Route::post('/categories/create',[CategoryController::class,'store'])->middleware('role:admin');
